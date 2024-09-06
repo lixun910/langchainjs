@@ -699,11 +699,11 @@ export class ChatOllama
       total_tokens: 0,
     };
 
-    if (params.tools && params.tools.length > 0) {
+    if (this.streaming === false && params.tools && params.tools.length > 0) {
       const toolResult = await this.client.chat({
         ...params,
         messages: ollamaMessages,
-        stream: false, // Ollama currently does not support streaming with tools
+        stream: false, // for Ollama < 0.3.0 which does not support streaming with tools
       });
 
       const { message: responseMessage, ...rest } = toolResult;
